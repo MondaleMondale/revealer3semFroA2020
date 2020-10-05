@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <p>0 % revealed</p>
+    <svg viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink">
+        <defs>
+            <clipPath id="looking-glass">
+
+                <circle r="40" cx="80" cy="80" id="mask-ring" />
+            </clipPath>
+        </defs>
+
+        <image id="picture" href="assets/tiger.svg" x="0" y="0" />
+        
+
+    </svg>
+   
+
+
+
+
+    <script>
+
+        let numberOfTilesRevealed = 0;
+        const svg = document.querySelector("svg");
+        let theXAddUp = 0;
+        let theYAddUp = 0;
+        const sizeOfTheRevealerTile = 4;
+        const theWidth = 37;
+        const theHeight = 37;
+        for (x = 0; x < theWidth; x++) {
+
+            for (y = 0; y < theHeight; y++) {
+                if (theXAddUp >= theWidth) {
+
+                    theYAddUp++;
+                    theXAddUp = 0;
+
+                }
+                theXAddUp++;
+
+
+                var theRect = document.createElementNS("http://www.w3.org/2000/svg", 'rect');
+
+                theRect.setAttribute("x", theXAddUp * sizeOfTheRevealerTile);
+                theRect.setAttribute("y", theYAddUp * sizeOfTheRevealerTile);
+                theRect.setAttribute("width", sizeOfTheRevealerTile);
+                theRect.setAttribute("height", sizeOfTheRevealerTile);
+
+                theRect.setAttribute("fill", "red");
+                theRect.addEventListener("mouseover", theMouseOver);
+                
+                svg.appendChild(theRect);
+
+
+
+            }
+
+        }
+        function theMouseOver() {
+            this.setAttribute("fill", "none");
+            numberOfTilesRevealed++;
+            // console.log(numberOfTilesRevealed);
+            document.querySelector("p").textContent = Math.round(numberOfTilesRevealed/(theWidth * theHeight)*100)+" % revealed";
+        }
+
+
+    </script>
+
+</body>
+
+
+</html>
